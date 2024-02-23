@@ -27,3 +27,115 @@ In case you need to recover funds, a specific script is provided for this purpos
 
 Additional Information
 For more information and tutorials on Solidity, consider exploring further resources and guides available online.
+
+To streamline the setup process for both macOS and Windows environments with the updated repository URL (soumyadebna/Simple-Dex-Arbitrage), I'll provide a set of scripts tailored for each operating system. These scripts will automate the cloning of the repository, setting up the environment, deploying the contracts, executing trades, and recovering funds as necessary.
+
+For macOS
+Setup Script (setup.sh)
+bash
+Copy code
+#!/bin/bash
+
+# Clone the repository
+git clone https://github.com/soumyadebna/Simple-Dex-Arbitrage.git
+
+# Change directory
+cd Simple-Dex-Arbitrage
+
+# Rename .env-example.txt to .env and prompt user for private key insertion
+mv .env-example.txt .env
+echo "Please enter your private key:"
+read PRIVATE_KEY
+echo "PRIVATE_KEY=$PRIVATE_KEY" >> .env
+
+# Install dependencies
+npm install
+
+# Deployment script
+echo "Deploying contracts..."
+npx hardhat run --network aurora ./scripts/deploy.js
+
+# Prompt to add arbContract deployment address to config/aurora.json
+echo "Please add the arbContract deployment address to config/aurora.json manually."
+To run this script on macOS:
+
+Open Terminal.
+Navigate to the directory where you want to clone the repository.
+Create a new file named setup.sh and paste the script above into it.
+Make the script executable with chmod +x setup.sh.
+Execute the script by running ./setup.sh.
+Trade Execution Script (trade.sh)
+bash
+Copy code
+#!/bin/bash
+
+# Assumes you're in the Simple-Dex-Arbitrage directory
+npx hardhat run --network aurora ./scripts/trade.js
+To execute trades, follow steps 1-4 from the setup script, substituting trade.sh for setup.sh.
+
+Fund Recovery Script (recover.sh)
+bash
+Copy code
+#!/bin/bash
+
+# Assumes you're in the Simple-Dex-Arbitrage directory
+npx hardhat run --network aurora ./scripts/recover.js
+To recover funds, follow the same steps as for the trade execution script, using recover.sh.
+
+For Windows
+Setup Script (setup.bat)
+bat
+Copy code
+@echo off
+set /p PRIVATE_KEY="Please enter your private key: "
+
+:: Clone the repository
+git clone https://github.com/soumyadebna/Simple-Dex-Arbitrage.git
+
+:: Change directory
+cd Simple-Dex-Arbitrage
+
+:: Rename .env-example.txt to .env and insert the private key
+rename .env-example.txt .env
+echo PRIVATE_KEY=%PRIVATE_KEY% >> .env
+
+:: Install dependencies
+npm install
+
+:: Deploy contracts
+echo Deploying contracts...
+npx hardhat run --network aurora .\scripts\deploy.js
+
+echo Please add the arbContract deployment address to config\aurora.json manually.
+To run this script on Windows:
+
+Open Notepad or any text editor.
+Paste the script above into the editor.
+Save the file as setup.bat in your desired directory.
+Double-click setup.bat to run it.
+Trade Execution Script (trade.bat)
+bat
+Copy code
+@echo off
+
+:: Assumes you're in the Simple-Dex-Arbitrage directory
+npx hardhat run --network aurora .\scripts\trade.js
+Save this script as trade.bat following the same steps as setup.bat.
+
+Fund Recovery Script (recover.bat)
+bat
+Copy code
+@echo off
+
+:: Assumes you're in the Simple-Dex-Arbitrage directory
+npx hardhat run --network aurora .\scripts\recover.js
+Save this script as recover.bat following the same steps as setup.bat.
+
+Note
+For both macOS and Windows scripts, it's assumed that you have Git, Node.js, and npm installed on your system.
+The scripts prompt you to manually add the arbContract deployment address to config/aurora.json after deployment since this requires manual intervention.
+Ensure you have the required permissions to execute these scripts, and you may need to adjust security settings or run terminals as an administrator in Windows or use sudo in macOS for certain operations.
+
+
+
+
